@@ -41,17 +41,19 @@ def build():
     groups = [
         {
             "id": "rarity", "labelEn": "Rarity", "labelZh": "稀有度", "mode": "or",
+            # Match the rarity LINE value (稀有度: 稀有), not bare 稀有 which also
+            # appears in 物品稀有度 / 怪物稀有度. Confirmed from real item text.
             "options": [
-                {"id": "normal", "en": "Normal", "zh": "普通", "regex": "普通", "confidence": "check"},
-                {"id": "magic", "en": "Magic", "zh": "魔法", "regex": "魔法", "confidence": "check"},
-                {"id": "rare", "en": "Rare", "zh": "稀有", "regex": "稀有", "confidence": "check"},
+                {"id": "normal", "en": "Normal", "zh": "普通", "regex": "度: 普通", "confidence": "high"},
+                {"id": "magic", "en": "Magic", "zh": "魔法", "regex": "度: 魔法", "confidence": "high"},
+                {"id": "rare", "en": "Rare", "zh": "稀有", "regex": "度: 稀有", "confidence": "high"},
             ],
         },
         {
             "id": "props", "labelEn": "Item Properties", "labelZh": "物品属性", "mode": "and",
             "options": [
                 {"id": "quality", "en": "Quality", "zh": cn("Quality"), "regex": "品质", "confidence": "high"},
-                {"id": "corrupted", "en": "Corrupted", "zh": "已腐化", "regex": "已腐化", "confidence": "high"},
+                {"id": "corrupted", "en": "Corrupted", "zh": "已腐化", "regex": "被腐化", "confidence": "high"},
                 {"id": "ilvl", "en": "Item Level", "zh": "物品等级", "regex": "物品等级", "confidence": "high"},
             ],
         },
