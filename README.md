@@ -1,8 +1,11 @@
 # poe2-re-cn — Chinese-client mirror of poe2.re
 
-A mirror of [poe2.re](https://poe2.re/) (a Path of Exile 2 in-game **regex
-generator**) that works on the **国服 (WeGame/Tencent) client**, whose in-game
-text is Simplified Chinese. poe2.re's regex snippets match **English** item text,
+**Live: https://addohm.github.io/poe2-re-cn/**
+
+An unofficial mirror of [poe2.re](https://poe2.re/) (a Path of Exile 2 in-game
+**regex generator**) that works on the **国服 (WeGame/Tencent) client**, whose
+in-game text is Simplified Chinese. All credit for the original tool and its UX
+goes to the poe2.re author; this project only re-targets it to the CN client. poe2.re's regex snippets match **English** item text,
 so they don't work on the CN client. This project:
 
 1. **Translates** every mod string to Chinese, using the datamined
