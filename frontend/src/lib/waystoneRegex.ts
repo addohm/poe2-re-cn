@@ -3,10 +3,9 @@
 // CN info-panel text whose exact wording is still being verified in-game.
 
 import type { ModToken } from "../data";
-import { atLeast, intRange, digitSet } from "./numeric";
+import { atLeast, intRange, digitSet, valueFrag } from "./numeric";
 import {
-  WAYSTONE_NUMERIC, WAYSTONE_RARITY, WAYSTONE_STATE,
-  WAYSTONE_TIER, WAYSTONE_REVIVES,
+  WAYSTONE_NUMERIC, WAYSTONE_RARITY, WAYSTONE_STATE, WAYSTONE_REVIVES,
 } from "./waystoneConfig";
 
 export interface WaystoneState {
@@ -24,10 +23,7 @@ export interface WaystoneState {
 
 // one mod -> its snippet, optionally requiring a value >= threshold on the line
 function modFrag(token: ModToken, value: string | undefined, round10: boolean): string {
-  if (value && String(value).trim() !== "") {
-    const num = atLeast(value, round10);
-    if (num) return `${token.regex}.*${num}`;
-  }
+  if (value && String(value).trim() !== "") return valueFrag(token.regex, value, round10);
   return token.regex;
 }
 
@@ -40,13 +36,14 @@ export function buildWaystoneRegex(s: WaystoneState): string {
     parts.push(rar.length === 1 ? `"${rar[0]}"` : `"(${rar.join("|")})"`);
   }
 
-  // tier (skip the default full 1-16 range)
+  // tier — real line is "引路石（ 16 阶）". Anchor on 引路石（ … <range> … 阶 so a
+  // single-digit range can't match inside a two-digit tier. (skip default 1-16)
   if (!(s.tier.min <= 1 && s.tier.max >= 16) && s.tier.max >= s.tier.min) {
     const pat = intRange(s.tier.min, s.tier.max || 16);
-    if (pat) parts.push(`"${WAYSTONE_TIER.frag}.*${pat}"`);
+    if (pat) parts.push(`"引路石（.${pat}.阶"`);
   }
 
-  // revives (skip default full 0-6)
+  // revives — real line "复活次数: 0 (augmented)" (no %). (skip default 0-6)
   if (!(s.revives.min <= 0 && s.revives.max >= 6) && s.revives.max >= s.revives.min) {
     const set = digitSet(s.revives.min, s.revives.max);
     if (set) parts.push(`"${WAYSTONE_REVIVES.frag}.*${set}"`);

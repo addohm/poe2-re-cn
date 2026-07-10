@@ -1,6 +1,6 @@
 // CN port of poe2.re's tablet regex builder (zv + helpers).
 import type { ModToken } from "../data";
-import { atLeast } from "./numeric";
+import { atLeast, valueFrag } from "./numeric";
 import { TABLET_RARITY, TABLET_TYPES, TABLET_USES } from "./tabletConfig";
 
 export interface TabletState {
@@ -15,10 +15,7 @@ export interface TabletState {
 }
 
 function modFrag(token: ModToken, value: string | undefined, round10: boolean): string {
-  if (value && String(value).trim() !== "") {
-    const num = atLeast(value, round10);
-    if (num) return `${token.regex}.*${num}`;
-  }
+  if (value && String(value).trim() !== "") return valueFrag(token.regex, value, round10);
   return token.regex;
 }
 

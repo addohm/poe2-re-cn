@@ -58,6 +58,18 @@ export function intRange(min: number, max: number): string {
   return parts.length > 1 ? `(${body})` : body;
 }
 
+/** Match a mod (by its snippet) requiring its rolled value >= `value`. On the CN
+ * client an augmentable mod renders as "…text… 22 (20-25)%": the rolled value
+ * sits immediately before the "(" range bracket, and the mod's key term can be
+ * before OR after it (e.g. 混沌 comes after the value). So we match the value
+ * adjacent to "(" and the snippet in either order. */
+export function valueFrag(snippet: string, value: string | number, round10 = false): string {
+  const num = atLeast(value, round10);
+  if (!num) return snippet;
+  const val = `${num} ?\\(`; // rolled value, optional space, then the range "("
+  return `(${snippet}.*${val}|${val}.*${snippet})`;
+}
+
 function WT(n: number, r: number): string {
   return n > r ? "" : n === r ? n.toString() : n === 0 && r === 9 ? "\\d" : `[${n}-${r}]`;
 }

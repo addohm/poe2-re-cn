@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { loadRelic, type ModToken } from "../data";
-import { atLeast } from "../lib/numeric";
+import { valueFrag } from "../lib/numeric";
 import ResultBar from "../components/ResultBar";
 import { useLang } from "../i18n";
 
@@ -21,8 +21,7 @@ export default function Relic() {
 
   const frag = (tk: ModToken) => {
     const v = values[tk.id];
-    const num = v && v.trim() !== "" ? atLeast(v) : "";
-    return num ? `${tk.regex}.*${num}` : tk.regex;
+    return v && v.trim() !== "" ? valueFrag(tk.regex, v) : tk.regex;
   };
 
   const regex = useMemo(() => {

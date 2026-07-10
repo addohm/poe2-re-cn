@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { loadItem, type ItemBasetype, type ItemData } from "../data";
 import { buildModRegex, type SelectType } from "../lib/modRegex";
-import { atLeast } from "../lib/numeric";
+import { valueFrag } from "../lib/numeric";
 import ResultBar from "../components/ResultBar";
 import { useLang } from "../i18n";
 
@@ -64,8 +64,7 @@ export default function Item() {
         const k = modKey(g.cat, i);
         if (!sel[k]) return;
         const v = values[k];
-        const num = v && v.trim() !== "" ? atLeast(v) : "";
-        out.push({ regex: num ? `${m.regex}.*${num}` : m.regex });
+        out.push({ regex: v && v.trim() !== "" ? valueFrag(m.regex, v) : m.regex });
       })
     );
     return out;
