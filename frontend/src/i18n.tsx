@@ -28,6 +28,9 @@ const STRINGS: Dict = {
     zh: "勾选想要的碑牌词缀，生成可粘贴到游戏内搜索框的正则。",
     en: "Select the tablet affixes you want; get a regex to paste into the in-game search.",
   },
+  tb_rarity: { zh: "碑牌稀有度", en: "Tablet rarity" },
+  tb_type: { zh: "碑牌类型", en: "Tablet type" },
+  tb_uses: { zh: "剩余使用次数", en: "Min. uses remaining" },
   relic_title: { zh: "圣物 正则", en: "Relic Regex" },
   relic_intro: {
     zh: "勾选想要的圣物词缀（前缀/后缀），生成可粘贴到游戏内搜索框的正则。",
