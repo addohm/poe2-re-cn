@@ -1,0 +1,69 @@
+{
+  "total": 32,
+  "translated_pct": 100.0,
+  "regex_ok_pct": 100.0,
+  "translation_misses": [],
+  "regex_collisions": [],
+  "sample": [
+    {
+      "en": "Players are periodically Cursed with Temporal Chains",
+      "zh": "玩家周期性受到时空锁链诅咒",
+      "regex": "时空"
+    },
+    {
+      "en": "Monsters deal (5-20)% of Damage as Extra Chaos",
+      "zh": "怪物造成相当于伤害 #% 的额外混沌伤害",
+      "regex": "混沌"
+    },
+    {
+      "en": "Area has patches of Ignited Ground",
+      "zh": "区域内有点燃地面",
+      "regex": "点燃"
+    },
+    {
+      "en": "Players are periodically Cursed with Elemental Weakness",
+      "zh": "玩家周期性受到元素要害诅咒",
+      "regex": "到元"
+    },
+    {
+      "en": "Monsters deal (5-20)% of Damage as Extra Cold",
+      "zh": "怪物造成相当于伤害 #% 的额外冰霜伤害",
+      "regex": "冰霜"
+    },
+    {
+      "en": "Monsters deal (5-20)% of Damage as Extra Fire",
+      "zh": "怪物造成相当于伤害 #% 的额外火焰伤害",
+      "regex": "火焰"
+    },
+    {
+      "en": "Monster Damage Penetrates (6-14)% Elemental Resistances",
+      "zh": "召唤生物的伤害穿透 #% 元素抗性",
+      "regex": "召唤"
+    },
+    {
+      "en": "Monsters have (30-70)% increased Stun Threshold|Monsters have (39-79)% increased Ailment Threshold",
+      "zh": "怪物的异常状态阈值提高 #%",
+      "regex": "阈值"
+    },
+    {
+      "en": "Players have (29-40)% less Recovery Rate of Life and Energy Shield",
+      "zh": "玩家的生命和能量护盾总回复速度总降 #%",
+      "regex": "的生"
+    },
+    {
+      "en": "Monsters take (15-26)% reduced Extra Damage from Critical Hits",
+      "zh": "怪物受到的暴击伤害降低 #%",
+      "regex": "的暴"
+    },
+    {
+      "en": "Monsters Break Armour equal to (15-30)% of Physical Damage dealt",
+      "zh": "怪物粉碎护甲，相当于造成物理伤害的 #%",
+      "regex": "粉碎"
+    },
+    {
+      "en": "Monsters gain 12% of maximum Life as Extra maximum Energy Shield",
+      "zh": "怪物将生命上限的 #% 转化为额外能量护盾上限",
+      "regex": "转化"
+    }
+  ]
+}

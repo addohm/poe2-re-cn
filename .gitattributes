@@ -1,0 +1,6 @@
+# Normalize line endings to LF in the repo (keeps the Linux CI build clean and
+# avoids CRLF churn from Windows checkouts).
+* text=auto eol=lf
+
+# Generated data is UTF-8 JSON; treat as text.
+*.json text eol=lf

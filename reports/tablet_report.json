@@ -1,0 +1,78 @@
+{
+  "total": 81,
+  "translated_pct": 100.0,
+  "regex_ok_pct": 97.53,
+  "translation_misses": [],
+  "regex_collisions": [
+    {
+      "id": -1408619460,
+      "zh": "地图包含 # 个额外的阿兹莫里之灵"
+    },
+    {
+      "id": -978257151,
+      "zh": "地图包含 # 个额外的阿兹莫里之灵"
+    }
+  ],
+  "sample": [
+    {
+      "en": "Map has (30-40)% increased Magic Monsters",
+      "zh": "地图内魔法怪物数量提高 #%",
+      "regex": "内魔"
+    },
+    {
+      "en": "(12-18)% increased Experience gain in Map",
+      "zh": "地图内的经验值获取提高 #%",
+      "regex": "值获"
+    },
+    {
+      "en": "Map has (15-20)% increased Monster Rarity",
+      "zh": "地图上的怪物稀有度提高 #%",
+      "regex": "图上"
+    },
+    {
+      "en": "(15-30)% increased Expedition Explosive Placement Range in Map",
+      "zh": "地图内先祖秘藏炸药放置范围提高 #%",
+      "regex": "炸药"
+    },
+    {
+      "en": "(15-30)% increased quantity of Expedition Artifacts dropped by Monsters in Map",
+      "zh": "地图内怪物掉落的先祖秘藏神器数量提高 #%",
+      "regex": "神器"
+    },
+    {
+      "en": "Favours Deferred at Ritual Altars in Map reappear (25-40)% sooner",
+      "zh": "地图内驱灵祭坛上延时的恩典重现速度加快 #%",
+      "regex": "加快"
+    },
+    {
+      "en": "(20-30)% increased chance for Abyssal monsters in Map to have Abyssal Modifiers",
+      "zh": "地图中的深渊怪物带有深渊词缀的几率提高 #%",
+      "regex": "物带"
+    },
+    {
+      "en": "Map contains (15-30)% increased number of [Runic] Monster Markers",
+      "zh": "地图内符文怪物标记的数量提高 #%",
+      "regex": "标记"
+    },
+    {
+      "en": "(5-10)% chance to gain an additional Crystal from Vaal Beacons in Map",
+      "zh": "有 #% 的几率从地图中的瓦尔灯塔获得一个额外的水晶",
+      "regex": "获得"
+    },
+    {
+      "en": "Ritual Altars in Map allow rerolling Favours (1-3) additional times",
+      "zh": "地图内的驱灵祭坛可以额外重置恩典 # 次",
+      "regex": "坛可"
+    },
+    {
+      "en": "Map contains an additional [Essence]",
+      "zh": "地图包含一个额外的精华",
+      "regex": "一个额外的精"
+    },
+    {
+      "en": "Map contains an additional Abyss",
+      "zh": "地图额外包含一个深渊",
+      "regex": "图额"
+    }
+  ]
+}

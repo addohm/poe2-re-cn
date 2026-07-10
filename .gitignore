@@ -1,0 +1,22 @@
+# deps / build
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/*.tsbuildinfo
+
+# python
+__pycache__/
+*.pyc
+
+# recovered poe2.re source data (local build input only — not needed to host the
+# site, and avoids republishing upstream's raw assets). Regenerate by fetching
+# from poe2.re, then run scripts/gen_*.py to rebuild frontend/public/generated/.
+reference/
+
+# editor / local tooling
+.claude/
+frontend/.claude/
+
+# os
+Thumbs.db
+.DS_Store
