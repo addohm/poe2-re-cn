@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { loadItem, type ItemBasetype, type ItemData } from "../data";
 import { buildModRegex, type SelectType } from "../lib/modRegex";
+import { atLeast } from "../lib/numeric";
+import ResultBar from "../components/ResultBar";
 import { useLang } from "../i18n";
 
 const CAT_LABEL: Record<string, { zh: string; en: string }> = {
@@ -16,8 +18,8 @@ export default function Item() {
   const [query, setQuery] = useState("");
   const [base, setBase] = useState<ItemBasetype | null>(null);
   const [sel, setSel] = useState<Record<string, boolean>>({});
+  const [values, setValues] = useState<Record<string, string>>({});
   const [wantedType, setWantedType] = useState<SelectType>("all");
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     loadItem().then(setData);
@@ -59,22 +61,20 @@ export default function Item() {
     const out: { regex: string }[] = [];
     base.groups.forEach((g) =>
       g.modifiers.forEach((m, i) => {
-        if (sel[modKey(g.cat, i)]) out.push({ regex: m.regex });
+        const k = modKey(g.cat, i);
+        if (!sel[k]) return;
+        const v = values[k];
+        const num = v && v.trim() !== "" ? atLeast(v) : "";
+        out.push({ regex: num ? `${m.regex}.*${num}` : m.regex });
       })
     );
     return out;
-  }, [base, sel]);
+  }, [base, sel, values]);
 
   const regex = useMemo(
     () => buildModRegex({ wanted: selectedMods as any, wantedType, unwanted: [] }),
     [selectedMods, wantedType]
   );
-
-  const copy = () => {
-    navigator.clipboard.writeText(regex);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
-  };
 
   const pick = (bt: ItemBasetype, label: string) => {
     setBase(bt);
@@ -112,17 +112,7 @@ export default function Item() {
 
       {base && (
         <>
-          <div className="output-bar">
-            <code className="output">{regex || t("emptyOutput")}</code>
-            <div className="output-actions">
-              <button onClick={copy} disabled={!regex}>
-                {copied ? t("copied") : t("copy")}
-              </button>
-              <button onClick={() => setSel({})} disabled={!selectedMods.length}>
-                {t("clear")}
-              </button>
-            </div>
-          </div>
+          <ResultBar regex={regex} onReset={() => { setSel({}); setValues({}); }} />
           <p className="note">{t("regexNote")}</p>
 
           <div className="controls">
@@ -155,6 +145,12 @@ export default function Item() {
                     >
                       <span className={"mark " + (on ? "wanted" : "")} />
                       <span className="mod-text">{lang === "zh" ? m.zhText : m.en}</span>
+                      {on && (
+                        <input className="mod-value" type="number" placeholder="≥"
+                          value={values[k] ?? ""}
+                          onClick={(e) => e.stopPropagation()}
+                          onChange={(e) => setValues((v) => ({ ...v, [k]: e.target.value }))} />
+                      )}
                       <code className="mod-regex">{m.regex}</code>
                     </li>
                   );

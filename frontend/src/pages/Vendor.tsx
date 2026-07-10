@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { loadVendor, type VendorData, type VendorGroup } from "../data";
+import { levelRange } from "../lib/numeric";
+import ResultBar from "../components/ResultBar";
 import { useLang } from "../i18n";
 
 // Combine selected options: an `or` group (rarity, class — an item has only one)
@@ -27,43 +29,53 @@ export default function Vendor() {
   const { lang, t } = useLang();
   const [data, setData] = useState<VendorData | null>(null);
   const [sel, setSel] = useState<Record<string, boolean>>({});
-  const [copied, setCopied] = useState(false);
+  const [ilvl, setIlvl] = useState({ min: 0, max: 0 });
+  const [clvl, setClvl] = useState({ min: 0, max: 0 });
 
   useEffect(() => {
     loadVendor().then(setData);
   }, []);
 
-  const regex = useMemo(
-    () => (data ? buildVendorRegex(data.groups, sel) : ""),
-    [data, sel]
-  );
+  const regex = useMemo(() => {
+    const parts: string[] = [];
+    if (data) { const r = buildVendorRegex(data.groups, sel); if (r) parts.push(r); }
+    const il = levelRange(ilvl.min, ilvl.max, "物品等级.*"); // frag from ClientStrings "物品等级 {0}"
+    if (il) parts.push(`"${il}"`);
+    const cl = levelRange(clvl.min, clvl.max, "需求.*等级.*"); // requires-level, in-game format unverified
+    if (cl) parts.push(`"${cl}"`);
+    return parts.join(" ");
+  }, [data, sel, ilvl, clvl]);
 
-  const copy = () => {
-    navigator.clipboard.writeText(regex);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
-  };
-
-  const count = Object.values(sel).filter(Boolean).length;
+  const reset = () => { setSel({}); setIlvl({ min: 0, max: 0 }); setClvl({ min: 0, max: 0 }); };
 
   return (
     <div className="page">
       <h1>{t("vendor_title")}</h1>
       <p className="intro">{t("vendor_intro")}</p>
 
-      <div className="output-bar">
-        <code className="output">{regex || t("emptyOutput")}</code>
-        <div className="output-actions">
-          <button onClick={copy} disabled={!regex}>
-            {copied ? t("copied") : t("copy")}
-          </button>
-          <button onClick={() => setSel({})} disabled={!count}>
-            {t("clear")}
-          </button>
+      <ResultBar regex={regex} onReset={reset} />
+      <p className="note warn">{t("vendor_warn")}</p>
+
+      <div className="group two-col">
+        <div>
+          <h3 className="group-title">{t("vendor_ilvl")}</h3>
+          <div className="minmax">
+            <label>{t("min")}<input type="number" min={0} max={100} value={ilvl.min || ""}
+              onChange={(e) => setIlvl((s) => ({ ...s, min: +e.target.value }))} /></label>
+            <label>{t("max")}<input type="number" min={0} max={100} value={ilvl.max || ""}
+              onChange={(e) => setIlvl((s) => ({ ...s, max: +e.target.value }))} /></label>
+          </div>
+        </div>
+        <div>
+          <h3 className="group-title">{t("vendor_clvl")}<span className="tag">?</span></h3>
+          <div className="minmax">
+            <label>{t("min")}<input type="number" min={0} max={100} value={clvl.min || ""}
+              onChange={(e) => setClvl((s) => ({ ...s, min: +e.target.value }))} /></label>
+            <label>{t("max")}<input type="number" min={0} max={100} value={clvl.max || ""}
+              onChange={(e) => setClvl((s) => ({ ...s, max: +e.target.value }))} /></label>
+          </div>
         </div>
       </div>
-      <p className="note">{t("regexNote")}</p>
-      <p className="note warn">{t("vendor_warn")}</p>
 
       {data?.groups.map((g) => (
         <div key={g.id} className="group">

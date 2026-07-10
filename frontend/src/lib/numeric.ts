@@ -58,6 +58,37 @@ export function intRange(min: number, max: number): string {
   return parts.length > 1 ? `(${body})` : body;
 }
 
+function WT(n: number, r: number): string {
+  return n > r ? "" : n === r ? n.toString() : n === 0 && r === 9 ? "\\d" : `[${n}-${r}]`;
+}
+
+/** Level-range regex `<prefix>(…)\b` matching an integer in [min..max] (0 = open).
+ * Faithful port of poe2.re's vx. Returns null when the range is empty/full. */
+export function levelRange(min: number, max: number, prefix: string): string | null {
+  const n = min, r = max;
+  if ((n === 0 && r === 0) || (r > 0 && n > r)) return null;
+  const o = r === 0 ? 99 : r;
+  if (n === 0 && o === 99) return `${prefix}(\\d{1,2})\\b`;
+  if (n > 0 && n === o) return `${prefix}(${n})\\b`;
+  const s = n <= 9 ? WT(n, Math.min(9, o)) : "";
+  const d = Math.floor(Math.min(Math.max(n, 10), o) / 10);
+  const f = Math.floor(o / 10);
+  const h: string[] = [];
+  if (s) h.push(s);
+  if (d <= f) {
+    if (d === f) {
+      const y = n > 9 ? n % 10 : 0, v = o % 10;
+      h.push(`${d}[${y}-${v}]`);
+    } else {
+      if (n <= d * 10 + 9 && n > d * 10) { const y = n % 10; h.push(`${d}[${y}-9]`); }
+      else if (n <= d * 10) h.push(`${d}\\d`);
+      if (f > d + 1) h.push(`[${d + 1}-${f - 1}]\\d`);
+      if (o % 10 > 0) h.push(`${f}[0-${o % 10}]`); else h.push(`${f}0`);
+    }
+  }
+  return `${prefix}(${h.join("|")})\\b`;
+}
+
 /** Collapse an inclusive integer set [min..max] into a compact char-class,
  * for small bounded ranges like waystone tier (1-16) or revives (0-6). Port of
  * poe2.re's kf + the rM collapse. Returns e.g. "3", "[2-4]", "[13]". */
