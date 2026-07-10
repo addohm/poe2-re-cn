@@ -188,6 +188,38 @@ body {
 .chip.on .chip-flag { color: #1a1a1a; }
 .note.warn { color: #e0a13a; }
 
+/* Result bar meta + options */
+.result-meta { display: flex; align-items: center; gap: 1rem; margin: 0.4rem 0 0.25rem; }
+.result-meta .length { color: var(--muted); font-size: 0.8rem; font-family: monospace; }
+.result-meta .length.over { color: #d9534f; }
+.link { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 0.85rem; padding: 0; }
+.options-panel { display: flex; flex-direction: column; gap: 0.6rem; padding: 0.6rem 0; }
+.check-inline { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text); }
+.reset { color: #d98a8a; }
+.reset:hover { border-color: #d9534f !important; color: #d9534f !important; }
+
+/* Two-column groups (tier / revives) */
+.group.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 32rem; }
+.minmax { display: flex; gap: 1rem; }
+.minmax label { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.8rem; color: var(--muted); }
+.minmax input { width: 4.5rem; }
+
+/* Numeric grid (quantity & yield) */
+.numeric-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: 0.6rem; }
+.numeric-field { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.82rem; color: var(--muted); }
+
+input[type="number"], .mod-value {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.35rem 0.5rem;
+}
+
+/* Mod row with value input */
+.mark-btn { cursor: pointer; display: inline-flex; }
+.mod-value { width: 4rem; }
+
 /* Mod list */
 .mod-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
 .mod {
