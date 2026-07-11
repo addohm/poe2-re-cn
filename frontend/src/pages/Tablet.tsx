@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { loadTablet, type ModToken } from "../data";
 import { buildTabletRegex, type TabletState } from "../lib/tabletRegex";
-import { TABLET_RARITY, TABLET_TYPES } from "../lib/tabletConfig";
+import { TABLET_RARITY, TABLET_TYPES, TYPE_TAG } from "../lib/tabletConfig";
 import ResultBar from "../components/ResultBar";
 import { useLang } from "../i18n";
 
@@ -24,10 +24,24 @@ export default function Tablet() {
   const disp = (tk: ModToken) => (lang === "zh" ? tk.zhText : tk.en);
   const sorted = useMemo(
     () => [...tokens].sort((a, b) => disp(a).localeCompare(disp(b), lang)), [tokens, lang]);
+
+  // Affixes are filtered to the selected tablet type(s): show a mod if it carries
+  // the generic `default` tag, or a mechanic tag matching a selected type. With no
+  // type selected, show everything.
   const filtered = useMemo(() => {
+    const selectedTags = new Set(
+      TABLET_TYPES.filter((ty) => types[ty.id]).map((ty) => TYPE_TAG[ty.id])
+    );
+    let list = sorted;
+    if (selectedTags.size > 0) {
+      list = list.filter((tk) => {
+        const tgs = tk.options.tags ?? [];
+        return tgs.includes("default") || tgs.some((t) => selectedTags.has(t));
+      });
+    }
     const q = query.trim().toLowerCase();
-    return q ? sorted.filter((tk) => tk.en.toLowerCase().includes(q) || tk.zhText.includes(q)) : sorted;
-  }, [sorted, query]);
+    return q ? list.filter((tk) => tk.en.toLowerCase().includes(q) || tk.zhText.includes(q)) : list;
+  }, [sorted, query, types]);
 
   const tstate: TabletState = {
     round10, rarity, types, usesEnabled, uses,

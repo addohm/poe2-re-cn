@@ -26,3 +26,18 @@ export const TABLET_TYPES: Toggle[] = [
 
 // Real line: "剩余次数：10" (fullwidth colon). frag 剩余次数.
 export const TABLET_USES = { labelZh: "剩余使用次数", labelEn: "Min. uses remaining", frag: "剩余次数", conf: "high" as const };
+
+// Map a tablet TYPE to the mechanic tag its affixes carry (from the generated
+// data's options.tags). Selecting a type shows only affixes tagged with it plus
+// the generic `default` map mods; type-exclusive mods of other types are hidden.
+// (Irradiated tablets add Expedition; Temple adds Vaal/Incursion; Overseer
+// buffs the Map Boss.)
+export const TYPE_TAG: Record<string, string> = {
+  irradiated: "expedition",
+  ritual: "ritual",
+  delirium: "delirium",
+  breach: "breach",
+  abyss: "abyss",
+  temple: "incursion",
+  overseer: "map_boss",
+};
