@@ -15,7 +15,20 @@ const STRINGS: Dict = {
   nav_tablet: { zh: "碑牌", en: "Tablet" },
   nav_relic: { zh: "圣物", en: "Relic" },
   nav_item: { zh: "物品", en: "Item" },
+  nav_translate: { zh: "翻译", en: "Translate" },
   comingSoon: { zh: "开发中", en: "Coming soon" },
+  translate_title: { zh: "物品翻译", en: "Item Translator" },
+  translate_intro: {
+    zh: "粘贴一件物品（游戏内复制的文本），按当前界面语言翻译整件物品。",
+    en: "Paste an item (copied from the game); it's translated line-by-line into the current UI language.",
+  },
+  translate_loading: { zh: "正在加载翻译词库…", en: "Loading translation data…" },
+  translate_in: { zh: "粘贴物品", en: "Paste item" },
+  translate_out: { zh: "翻译结果", en: "Translation" },
+  translate_placeholder: {
+    zh: "在此粘贴物品文本…", en: "Paste item text here…",
+  },
+  translate_outempty: { zh: "翻译结果会显示在这里。", en: "Translation appears here." },
   langToggle: { zh: "EN", en: "中文" },
 
   waystone_title: { zh: "地图 (界石) 正则", en: "Waystone Regex" },
