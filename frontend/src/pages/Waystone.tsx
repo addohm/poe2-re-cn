@@ -75,7 +75,9 @@ export default function Waystone() {
           </label>
         }
       />
-      <p className="note warn">{t("flaggedNote")}</p>
+      {WAYSTONE_RARITY.some((r) => r.conf === "check") && (
+        <p className="note warn">{t("flaggedNote")}</p>
+      )}
 
       {/* Rarity */}
       <div className="group">
@@ -83,7 +85,7 @@ export default function Waystone() {
         <div className="chip-row">
           {WAYSTONE_RARITY.map((r) => (
             <button key={r.id}
-              className={"chip check" + (rarity[r.id] ? " on" : "")}
+              className={"chip" + (r.conf === "check" ? " check" : "") + (rarity[r.id] ? " on" : "")}
               onClick={() => setRarity((s) => ({ ...s, [r.id]: !s[r.id] }))}>
               {(lang === "zh" ? r.labelZh : r.labelEn) + flag(r.conf)}
             </button>
@@ -94,7 +96,7 @@ export default function Waystone() {
       {/* Tier + Revives */}
       <div className="group two-col">
         <div>
-          <h3 className="group-title">{t("ws_tier")}<span className="tag">?</span></h3>
+          <h3 className="group-title">{t("ws_tier")}</h3>
           <div className="minmax">
             <label>{t("min")}<input type="number" min={1} max={16} value={tier.min}
               onChange={(e) => setTier((s) => ({ ...s, min: +e.target.value }))} /></label>
@@ -103,7 +105,7 @@ export default function Waystone() {
           </div>
         </div>
         <div>
-          <h3 className="group-title">{t("ws_revives")}<span className="tag">?</span></h3>
+          <h3 className="group-title">{t("ws_revives")}</h3>
           <div className="minmax">
             <label>{t("min")}<input type="number" min={0} max={6} value={revives.min}
               onChange={(e) => setRevives((s) => ({ ...s, min: +e.target.value }))} /></label>

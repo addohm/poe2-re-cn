@@ -54,22 +54,24 @@ export default function Tablet() {
             {t("roundDown")}
           </label>
         } />
-      <p className="note warn">{t("flaggedNote")}</p>
+      {TABLET_TYPES.some((r) => r.conf === "check") && (
+        <p className="note warn">{t("flaggedNote")}</p>
+      )}
 
       <div className="group two-col">
         <div>
           <h3 className="group-title">{t("tb_rarity")}</h3>
           <div className="chip-row">
             {TABLET_RARITY.map((r) => (
-              <button key={r.id} className={"chip check" + (rarity[r.id] ? " on" : "")}
+              <button key={r.id} className={"chip" + (r.conf === "check" ? " check" : "") + (rarity[r.id] ? " on" : "")}
                 onClick={() => setRarity((s) => ({ ...s, [r.id]: !s[r.id] }))}>
-                {(lang === "zh" ? r.labelZh : r.labelEn) + " ?"}
+                {(lang === "zh" ? r.labelZh : r.labelEn) + (r.conf === "check" ? " ?" : "")}
               </button>
             ))}
           </div>
         </div>
         <div>
-          <h3 className="group-title">{t("tb_uses")}<span className="tag">?</span></h3>
+          <h3 className="group-title">{t("tb_uses")}</h3>
           <label className="check-inline">
             <input type="checkbox" checked={usesEnabled} onChange={(e) => setUsesEnabled(e.target.checked)} />
             <input type="number" min={1} max={18} value={uses} style={{ width: "4.5rem" }}
@@ -79,12 +81,12 @@ export default function Tablet() {
       </div>
 
       <div className="group">
-        <h3 className="group-title">{t("tb_type")}<span className="tag">?</span></h3>
+        <h3 className="group-title">{t("tb_type")}</h3>
         <div className="chip-row">
           {TABLET_TYPES.map((r) => (
-            <button key={r.id} className={"chip check" + (types[r.id] ? " on" : "")}
+            <button key={r.id} className={"chip" + (r.conf === "check" ? " check" : "") + (types[r.id] ? " on" : "")}
               onClick={() => setTypes((s) => ({ ...s, [r.id]: !s[r.id] }))}>
-              {(lang === "zh" ? r.labelZh : r.labelEn) + " ?"}
+              {(lang === "zh" ? r.labelZh : r.labelEn) + (r.conf === "check" ? " ?" : "")}
             </button>
           ))}
         </div>
