@@ -2,19 +2,21 @@
 // These match Arabic numerals, which the CN client also uses, so they are
 // language-agnostic. Only the label/prefix around them is Chinese.
 
-// aM(n): a regex matching integers >= n, for n >= 100 (3-digit). Port of poe2.re aM.
+// aM(n): a regex matching integers >= n, for n >= 100 (3-digit). Port of poe2.re
+// aM, but using \d for extra-digit positions (poe2.re used "." = any char, which
+// on the CN client wrongly matched spaces / the "(min-max)" range numbers).
 function atLeast3(n: number): string {
   const r = n.toString();
   const i = r[0], o = r[1], s = r[2];
   const d = Number(i), f = Number(o);
-  if (o === "0" && s === "0") return d === 9 ? `${i}..` : `[${i}-9]..`;
+  if (o === "0" && s === "0") return d === 9 ? `${i}\\d\\d` : `[${i}-9]\\d\\d`;
   let h: string;
-  if (s === "0") h = o === "9" ? `${i}9.` : `${i}[${o}-9].`;
-  else if (o === "0") h = `${i}(0[${s}-9]|[1-9].)`;
+  if (s === "0") h = o === "9" ? `${i}9\\d` : `${i}[${o}-9]\\d`;
+  else if (o === "0") h = `${i}(0[${s}-9]|[1-9]\\d)`;
   else if (o === "9" && s === "9") h = `${i}99`;
   else if (o === "9") h = `${i}9[${s}-9]`;
-  else h = `${i}(${o}[${s}-9]|[${f + 1}-9].)`;
-  return d === 9 ? h : `(${h}|[${d + 1}-9]..)`;
+  else h = `${i}(${o}[${s}-9]|[${f + 1}-9]\\d)`;
+  return d === 9 ? h : `(${h}|[${d + 1}-9]\\d\\d)`;
 }
 
 /** Regex matching a number >= `value` (as poe2.re's zn). round10 floors to the
@@ -30,12 +32,12 @@ export function atLeast(value: string | number, round10 = false): string {
   if (o > 9) {
     const s = o.toString(), d = s[0], f = s[1];
     return s[1] === "0"
-      ? `([${d}-9].|\\d..)`
+      ? `([${d}-9]\\d|\\d\\d\\d)`
       : s[0] === "9"
-        ? `(${d}[${f}-9]|\\d..)`
-        : `(${d}[${f}-9]|[${Number(d) + 1}-9].|\\d..)`;
+        ? `(${d}[${f}-9]|\\d\\d\\d)`
+        : `(${d}[${f}-9]|[${Number(d) + 1}-9]\\d|\\d\\d\\d)`;
   }
-  return `([${o}-9]|\\d..?)`;
+  return `([${o}-9]|\\d\\d\\d?)`;
 }
 
 /** Regex matching an integer in [min..max] for small bounded ranges that may

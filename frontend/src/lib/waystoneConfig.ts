@@ -17,16 +17,16 @@ export interface NumericField {
   id: string; labelZh: string; labelEn: string; frag: string; conf: Conf;
 }
 
-// "Quantity & yield" — each emits  "<frag>.*<atLeast(value)>%".
+// "Quantity & yield" — each emits  "<frag>.*<atLeast(value)>%". These five are the
+// implicits real PoE2 waystones actually roll (confirmed across many items).
+// poe2.re's Item Quantity / Magic Monsters / Rare Monsters fields don't exist in
+// PoE2 and were removed.
 export const WAYSTONE_NUMERIC: NumericField[] = [
-  { id: "itemQuantity", labelZh: "物品数量", labelEn: "Item Quantity", frag: "物品数量", conf: "high" },
   { id: "itemRarity", labelZh: "物品稀有度", labelEn: "Item Rarity", frag: "物品稀有度", conf: "high" },
   { id: "waystoneDropChance", labelZh: "引路石掉落几率", labelEn: "Waystone Drop Chance", frag: "掉落几率", conf: "high" },
-  { id: "magicMonsters", labelZh: "魔法怪物", labelEn: "Magic Monsters", frag: "魔法怪物", conf: "check" },
-  { id: "rareMonsters", labelZh: "稀有怪物", labelEn: "Rare Monsters", frag: "稀有怪物", conf: "check" },
-  { id: "monsterEffectiveness", labelZh: "怪物效能", labelEn: "Monster Effectiveness", frag: "怪物效能", conf: "high" },
-  { id: "monsterRarity", labelZh: "怪物稀有度", labelEn: "Monster Rarity", frag: "怪物稀有度", conf: "high" },
   { id: "packSize", labelZh: "怪物群规模", labelEn: "Pack Size", frag: "怪物群规模", conf: "high" },
+  { id: "monsterRarity", labelZh: "怪物稀有度", labelEn: "Monster Rarity", frag: "怪物稀有度", conf: "high" },
+  { id: "monsterEffectiveness", labelZh: "怪物效能", labelEn: "Monster Effectiveness", frag: "怪物效能", conf: "high" },
 ];
 
 export interface Toggle { id: string; labelZh: string; labelEn: string; frag: string; conf: Conf; }
