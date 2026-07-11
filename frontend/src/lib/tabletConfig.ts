@@ -13,13 +13,15 @@ export const TABLET_RARITY: Toggle[] = [
 ];
 
 export const TABLET_TYPES: Toggle[] = [
+  // All confirmed from real item NAME lines except Temple:
+  // 能量辐照石板 / 驱灵仪式石板 / 惊悸迷雾石板 / 裂隙石板 / 深渊石板 / 霸主石板
   { id: "irradiated", labelZh: "能量辐照", labelEn: "Irradiated", frag: "辐照", conf: "high" },
-  { id: "ritual", labelZh: "驱灵仪式", labelEn: "Ritual", frag: "仪式", conf: "check" },
-  { id: "delirium", labelZh: "惊悸迷雾", labelEn: "Delirium", frag: "惊悸", conf: "check" },
+  { id: "ritual", labelZh: "驱灵仪式", labelEn: "Ritual", frag: "仪式", conf: "high" },
+  { id: "delirium", labelZh: "惊悸迷雾", labelEn: "Delirium", frag: "惊悸", conf: "high" },
   { id: "breach", labelZh: "裂隙", labelEn: "Breach", frag: "裂隙", conf: "high" },
-  { id: "abyss", labelZh: "深渊", labelEn: "Abyss", frag: "深渊", conf: "check" },
+  { id: "abyss", labelZh: "深渊", labelEn: "Abyss", frag: "深渊", conf: "high" },
   { id: "temple", labelZh: "夺魂之殿", labelEn: "Temple", frag: "夺魂", conf: "check" },
-  { id: "overseer", labelZh: "监督者", labelEn: "Overseer", frag: "监督", conf: "check" },
+  { id: "overseer", labelZh: "霸主", labelEn: "Overseer", frag: "霸主", conf: "high" },
 ];
 
 // Real line: "剩余次数：10" (fullwidth colon). frag 剩余次数.
