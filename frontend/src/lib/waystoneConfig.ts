@@ -41,10 +41,10 @@ export const WAYSTONE_RARITY: Toggle[] = [
 ];
 
 // Corrupted marker is 被腐化 (bottom of item). Uncorrupted = negate it.
+// (Waystones can no longer be delirious — that's what Delirium tablets are for.)
 export const WAYSTONE_STATE: Toggle[] = [
   { id: "corrupted", labelZh: "已腐化", labelEn: "Corrupted", frag: "被腐化", conf: "high" },
   { id: "uncorrupted", labelZh: "未腐化", labelEn: "Uncorrupted", frag: "被腐化", conf: "high" },
-  { id: "delirious", labelZh: "区域亢奋", labelEn: "Area is delirious", frag: "亢奋", conf: "check" },
 ];
 
 export const WAYSTONE_TIER = { labelZh: "阶级", labelEn: "Tier", min: 1, max: 16, conf: "high" as Conf };

@@ -73,7 +73,6 @@ export function buildWaystoneRegex(s: WaystoneState): string {
   const uncorrupted = s.state.uncorrupted && !s.state.corrupted;
   if (corrupted) parts.push(st[0].frag);
   else if (uncorrupted) parts.push(`!${st[1].frag}`);
-  if (s.state.delirious) parts.push(st[2].frag);
 
   if (s.customText.trim()) parts.push(s.customText.trim());
 
