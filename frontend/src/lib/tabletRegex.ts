@@ -11,6 +11,7 @@ export interface TabletState {
   uses: string;
   affixes: { token: ModToken; value?: string }[];
   affixType: "any" | "all";
+  unwanted: ModToken[];
   customText: string;
 }
 
@@ -41,6 +42,10 @@ export function buildTabletRegex(s: TabletState): string {
     const frags = s.affixes.map((a) => modFrag(a.token, a.value, s.round10));
     if (s.affixType === "any") parts.push(`"${frags.join("|")}"`);
     else parts.push(...frags.map((f) => `"${f}"`));
+  }
+
+  if (s.unwanted.length) {
+    parts.push(`"!${s.unwanted.map((t) => t.regex).join("|")}"`);
   }
 
   if (s.customText.trim()) parts.push(s.customText.trim());

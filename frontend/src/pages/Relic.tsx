@@ -9,9 +9,17 @@ import { useLang } from "../i18n";
 export default function Relic() {
   const { lang, t } = useLang();
   const [tokens, setTokens] = useState<ModToken[]>([]);
-  const [sel, setSel] = useState<Record<number, boolean>>({});
+  const [sel, setSel] = useState<Record<number, "wanted" | "unwanted">>({});
   const [values, setValues] = useState<Record<number, string>>({});
   const [matchType, setMatchType] = useState<"any" | "both">("any");
+
+  const cycle = (id: number) => setSel((s) => {
+    const n = { ...s };
+    if (!n[id]) n[id] = "wanted";
+    else if (n[id] === "wanted") n[id] = "unwanted";
+    else delete n[id];
+    return n;
+  });
 
   useEffect(() => { loadRelic().then((d) => setTokens(d.tokens)); }, []);
 
@@ -25,29 +33,32 @@ export default function Relic() {
   };
 
   const regex = useMemo(() => {
-    const pre = prefixes.filter((t) => sel[t.id]).map(frag).join("|");
-    const suf = suffixes.filter((t) => sel[t.id]).map(frag).join("|");
+    const pre = prefixes.filter((t) => sel[t.id] === "wanted").map(frag).join("|");
+    const suf = suffixes.filter((t) => sel[t.id] === "wanted").map(frag).join("|");
     const groups = [pre, suf].filter((x) => x !== "");
-    if (!groups.length) return "";
-    return matchType === "any"
-      ? `"${groups.join("|")}"`
+    const wanted = matchType === "any"
+      ? (groups.length ? `"${groups.join("|")}"` : "")
       : groups.map((g) => `"${g}"`).join(" ");
-  }, [prefixes, suffixes, sel, values, matchType]);
+    const unwanted = tokens.filter((t) => sel[t.id] === "unwanted").map((t) => t.regex);
+    const parts = [wanted, unwanted.length ? `"!${unwanted.join("|")}"` : ""].filter(Boolean);
+    return parts.join(" ").trim();
+  }, [prefixes, suffixes, tokens, sel, values, matchType]);
 
   const reset = () => { setSel({}); setValues({}); setMatchType("any"); };
 
   const renderList = (list: ModToken[]) => (
     <ul className="mod-list">
       {list.map((tk) => {
-        const on = sel[tk.id];
+        const st = sel[tk.id];
         return (
-          <li key={tk.id} className={"mod" + (on ? " wanted" : "")} title={lang === "zh" ? tk.en : tk.zhText}>
-            <span className="mark-btn" onClick={() => setSel((s) => ({ ...s, [tk.id]: !s[tk.id] }))}>
-              <span className={"mark " + (on ? "wanted" : "")} />
+          <li key={tk.id} className={"mod" + (st ? " " + st : "")} title={lang === "zh" ? tk.en : tk.zhText}>
+            <span className="mark-btn" onClick={() => cycle(tk.id)}>
+              <span className={"mark " + (st || "")} />
             </span>
-            <span className="mod-text" onClick={() => setSel((s) => ({ ...s, [tk.id]: !s[tk.id] }))}>{disp(tk)}</span>
-            {on && (
+            <span className="mod-text" onClick={() => cycle(tk.id)}>{disp(tk)}</span>
+            {st === "wanted" && (
               <input className="mod-value" type="number" placeholder="≥" value={values[tk.id] ?? ""}
+                onClick={(e) => e.stopPropagation()}
                 onChange={(e) => setValues((v) => ({ ...v, [tk.id]: e.target.value }))} />
             )}
             <code className="mod-regex">{tk.regex}</code>
@@ -63,6 +74,7 @@ export default function Relic() {
       <p className="intro">{t("relic_intro")}</p>
 
       <ResultBar regex={regex} tool="relic" onReset={reset} />
+      <p className="note">{t("cycleHint")}</p>
 
       <div className="controls">
         <div className="seg">

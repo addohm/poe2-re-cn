@@ -13,7 +13,7 @@ export default function Tablet() {
   const [types, setTypes] = useState<Record<string, boolean>>({});
   const [usesEnabled, setUsesEnabled] = useState(false);
   const [uses, setUses] = useState("10");
-  const [sel, setSel] = useState<Record<number, boolean>>({});
+  const [sel, setSel] = useState<Record<number, "wanted" | "unwanted">>({});
   const [values, setValues] = useState<Record<number, string>>({});
   const [affixType, setAffixType] = useState<"any" | "all">("any");
   const [customText, setCustomText] = useState("");
@@ -45,11 +45,21 @@ export default function Tablet() {
 
   const tstate: TabletState = {
     round10, rarity, types, usesEnabled, uses,
-    affixes: tokens.filter((t) => sel[t.id]).map((t) => ({ token: t, value: values[t.id] })),
-    affixType, customText,
+    affixes: tokens.filter((t) => sel[t.id] === "wanted").map((t) => ({ token: t, value: values[t.id] })),
+    affixType,
+    unwanted: tokens.filter((t) => sel[t.id] === "unwanted"),
+    customText,
   };
   const regex = useMemo(() => buildTabletRegex(tstate),
     [round10, rarity, types, usesEnabled, uses, sel, values, affixType, customText, tokens]);
+
+  const cycle = (id: number) => setSel((s) => {
+    const n = { ...s };
+    if (!n[id]) n[id] = "wanted";
+    else if (n[id] === "wanted") n[id] = "unwanted";
+    else delete n[id];
+    return n;
+  });
 
   const reset = () => {
     setRarity({}); setTypes({}); setUsesEnabled(false); setUses("10");
@@ -107,7 +117,8 @@ export default function Tablet() {
       </div>
 
       <div className="group">
-        <h3 className="group-title">{t("wantedMods")}</h3>
+        <h3 className="group-title">{t("wantedMods")} / {t("unwantedMods")}</h3>
+        <p className="note">{t("cycleHint")}</p>
         <div className="controls">
           <input className="search" placeholder={t("search")} value={query}
             onChange={(e) => setQuery(e.target.value)} />
@@ -118,16 +129,17 @@ export default function Tablet() {
         </div>
         <ul className="mod-list">
           {filtered.map((tk) => {
-            const on = sel[tk.id];
+            const st = sel[tk.id];
             return (
-              <li key={tk.id} className={"mod" + (on ? " wanted" : "")} title={lang === "zh" ? tk.en : tk.zhText}>
-                <span className="mark-btn" onClick={() => setSel((s) => ({ ...s, [tk.id]: !s[tk.id] }))}>
-                  <span className={"mark " + (on ? "wanted" : "")} />
+              <li key={tk.id} className={"mod" + (st ? " " + st : "")} title={lang === "zh" ? tk.en : tk.zhText}>
+                <span className="mark-btn" onClick={() => cycle(tk.id)}>
+                  <span className={"mark " + (st || "")} />
                 </span>
                 <span className={"ps " + (tk.options.prefix ? "p" : "s")}>{tk.options.prefix ? "P" : "S"}</span>
-                <span className="mod-text" onClick={() => setSel((s) => ({ ...s, [tk.id]: !s[tk.id] }))}>{disp(tk)}</span>
-                {on && (
+                <span className="mod-text" onClick={() => cycle(tk.id)}>{disp(tk)}</span>
+                {st === "wanted" && (
                   <input className="mod-value" type="number" placeholder="≥" value={values[tk.id] ?? ""}
+                    onClick={(e) => e.stopPropagation()}
                     onChange={(e) => setValues((v) => ({ ...v, [tk.id]: e.target.value }))} />
                 )}
                 <code className="mod-regex">{tk.regex}</code>

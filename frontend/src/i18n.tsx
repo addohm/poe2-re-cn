@@ -73,6 +73,10 @@ const STRINGS: Dict = {
   vendor_clvl: { zh: "需求等级", en: "Requires Level" },
   wantedMods: { zh: "想要的词缀", en: "Wanted mods" },
   unwantedMods: { zh: "排除的词缀", en: "Unwanted mods" },
+  cycleHint: {
+    zh: "点击切换：想要（绿）→ 排除（红）→ 取消。",
+    en: "Click to cycle: wanted (green) → unwanted (red) → off.",
+  },
   matchAny: { zh: "任意匹配 (或)", en: "Match any (OR)" },
   matchAll: { zh: "全部匹配 (与)", en: "Match all (AND)" },
   search: { zh: "搜索词缀…", en: "Search mods…" },
