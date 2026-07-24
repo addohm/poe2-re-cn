@@ -220,6 +220,17 @@ input[type="number"], .mod-value {
 .mark-btn { cursor: pointer; display: inline-flex; }
 .mod-value { width: 4rem; }
 
+/* Prefix / suffix badge */
+.ps {
+  flex-shrink: 0;
+  width: 1.15rem; height: 1.15rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.68rem; font-weight: 700; border-radius: 3px;
+  border: 1px solid var(--border);
+}
+.ps.p { color: #7fb2ff; border-color: #35507a; background: #16233a; }
+.ps.s { color: #e0a13a; border-color: #6b5326; background: #2e2513; }
+
 /* Item translator */
 .translate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .translate-col { display: flex; flex-direction: column; }

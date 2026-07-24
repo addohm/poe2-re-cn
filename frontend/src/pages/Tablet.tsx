@@ -124,6 +124,7 @@ export default function Tablet() {
                 <span className="mark-btn" onClick={() => setSel((s) => ({ ...s, [tk.id]: !s[tk.id] }))}>
                   <span className={"mark " + (on ? "wanted" : "")} />
                 </span>
+                <span className={"ps " + (tk.options.prefix ? "p" : "s")}>{tk.options.prefix ? "P" : "S"}</span>
                 <span className="mod-text" onClick={() => setSel((s) => ({ ...s, [tk.id]: !s[tk.id] }))}>{disp(tk)}</span>
                 {on && (
                   <input className="mod-value" type="number" placeholder="≥" value={values[tk.id] ?? ""}

@@ -162,6 +162,7 @@ export default function Waystone() {
                 <span className="mark-btn" onClick={() => cycle(tk.id)}>
                   <span className={"mark " + (st || "")} />
                 </span>
+                <span className={"ps " + (tk.options.prefix ? "p" : "s")}>{tk.options.prefix ? "P" : "S"}</span>
                 <span className="mod-text" onClick={() => cycle(tk.id)}>{disp(tk)}</span>
                 {st === "wanted" && (
                   <input className="mod-value" type="number" placeholder="≥"
