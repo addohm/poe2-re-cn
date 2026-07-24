@@ -61,7 +61,7 @@ export default function Tablet() {
       <h1>{t("tablet_title")}</h1>
       <p className="intro">{t("tablet_intro")}</p>
 
-      <ResultBar regex={regex} onReset={reset} customText={customText} onCustomText={setCustomText}
+      <ResultBar regex={regex} tool="tablet" onReset={reset} customText={customText} onCustomText={setCustomText}
         options={
           <label className="check-inline">
             <input type="checkbox" checked={round10} onChange={(e) => setRound10(e.target.checked)} />

@@ -6,6 +6,7 @@ import Relic from "./pages/Relic";
 import Item from "./pages/Item";
 import Vendor from "./pages/Vendor";
 import Translate from "./pages/Translate";
+import Saved from "./pages/Saved";
 
 const NAV: { to: string; key: string; ready: boolean }[] = [
   { to: "/vendor", key: "nav_vendor", ready: true },
@@ -14,6 +15,7 @@ const NAV: { to: string; key: string; ready: boolean }[] = [
   { to: "/relic", key: "nav_relic", ready: true },
   { to: "/item", key: "nav_item", ready: true },
   { to: "/translate", key: "nav_translate", ready: true },
+  { to: "/saved", key: "nav_saved", ready: true },
 ];
 
 export default function App() {
@@ -52,6 +54,7 @@ export default function App() {
           <Route path="/relic" element={<Relic />} />
           <Route path="/item" element={<Item />} />
           <Route path="/translate" element={<Translate />} />
+          <Route path="/saved" element={<Saved />} />
         </Routes>
       </main>
     </div>

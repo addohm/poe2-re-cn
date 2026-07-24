@@ -62,7 +62,7 @@ export default function Relic() {
       <h1>{t("relic_title")}</h1>
       <p className="intro">{t("relic_intro")}</p>
 
-      <ResultBar regex={regex} onReset={reset} />
+      <ResultBar regex={regex} tool="relic" onReset={reset} />
 
       <div className="controls">
         <div className="seg">

@@ -66,7 +66,7 @@ export default function Waystone() {
       <p className="intro">{t("waystone_intro")}</p>
 
       <ResultBar
-        regex={regex} onReset={reset}
+        regex={regex} tool="waystone" onReset={reset}
         customText={customText} onCustomText={setCustomText}
         options={
           <label className="check-inline">

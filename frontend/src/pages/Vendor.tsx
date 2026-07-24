@@ -53,7 +53,7 @@ export default function Vendor() {
       <h1>{t("vendor_title")}</h1>
       <p className="intro">{t("vendor_intro")}</p>
 
-      <ResultBar regex={regex} onReset={reset} />
+      <ResultBar regex={regex} tool="vendor" onReset={reset} />
       <p className="note warn">{t("vendor_warn")}</p>
 
       <div className="group two-col">

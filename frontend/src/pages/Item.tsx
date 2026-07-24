@@ -111,7 +111,7 @@ export default function Item() {
 
       {base && (
         <>
-          <ResultBar regex={regex} onReset={() => { setSel({}); setValues({}); }} />
+          <ResultBar regex={regex} tool="item" onReset={() => { setSel({}); setValues({}); }} />
           <p className="note">{t("regexNote")}</p>
 
           <div className="controls">

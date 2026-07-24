@@ -231,6 +231,24 @@ input[type="number"], .mod-value {
 .ps.p { color: #7fb2ff; border-color: #35507a; background: #16233a; }
 .ps.s { color: #e0a13a; border-color: #6b5326; background: #2e2513; }
 
+/* Save form (in ResultBar) */
+.save-form { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.save-form .search { flex: 1; min-width: 8rem; }
+.save-form button { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.9rem; cursor: pointer; }
+.save-form button.on { background: var(--accent); color: #1a1a1a; font-weight: 600; }
+
+/* Saved page */
+.saved-list { display: grid; gap: 0.7rem; }
+.saved-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem; }
+.saved-head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; }
+.saved-name { flex: 1; background: transparent; border: none; color: var(--text); font-size: 1rem; font-weight: 600; padding: 0.2rem; border-bottom: 1px solid transparent; }
+.saved-name:hover, .saved-name:focus { border-bottom-color: var(--border); outline: none; }
+.saved-actions { display: flex; gap: 0.8rem; }
+.saved-actions .del { color: #d9534f; }
+.saved-regex { display: block; margin-bottom: 0.5rem; }
+.saved-note { width: 100%; background: transparent; border: none; border-bottom: 1px dashed var(--border); color: var(--muted); font-size: 0.85rem; padding: 0.25rem 0; }
+.saved-note:focus { outline: none; border-bottom-color: var(--accent); }
+
 /* Item translator */
 .translate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .translate-col { display: flex; flex-direction: column; }
