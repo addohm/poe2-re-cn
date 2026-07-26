@@ -12,6 +12,7 @@ export default function Relic() {
   const [sel, setSel] = useState<Record<number, "wanted" | "unwanted">>({});
   const [values, setValues] = useState<Record<number, string>>({});
   const [matchType, setMatchType] = useState<"any" | "both">("any");
+  const [query, setQuery] = useState("");
 
   const cycle = (id: number) => setSel((s) => {
     const n = { ...s };
@@ -26,6 +27,12 @@ export default function Relic() {
   const disp = (tk: ModToken) => (lang === "zh" ? tk.zhText : tk.en);
   const prefixes = useMemo(() => tokens.filter((t) => t.options.prefix), [tokens]);
   const suffixes = useMemo(() => tokens.filter((t) => !t.options.prefix), [tokens]);
+  // Display filter only — regex still uses the full lists, so a query never drops
+  // an already-selected mod from the output.
+  const shown = (list: ModToken[]) => {
+    const q = query.trim().toLowerCase();
+    return q ? list.filter((t) => t.en.toLowerCase().includes(q) || t.zhText.includes(q)) : list;
+  };
 
   const frag = (tk: ModToken) => {
     const v = values[tk.id];
@@ -77,6 +84,8 @@ export default function Relic() {
       <p className="note">{t("cycleHint")}</p>
 
       <div className="controls">
+        <input className="search" placeholder={t("search")} value={query}
+          onChange={(e) => setQuery(e.target.value)} />
         <div className="seg">
           <button className={matchType === "any" ? "on" : ""} onClick={() => setMatchType("any")}>{t("relic_any")}</button>
           <button className={matchType === "both" ? "on" : ""} onClick={() => setMatchType("both")}>{t("relic_both")}</button>
@@ -86,11 +95,11 @@ export default function Relic() {
       <div className="group two-col">
         <div>
           <h3 className="group-title">{t("prefix")}</h3>
-          {renderList(prefixes)}
+          {renderList(shown(prefixes))}
         </div>
         <div>
           <h3 className="group-title">{t("suffix")}</h3>
-          {renderList(suffixes)}
+          {renderList(shown(suffixes))}
         </div>
       </div>
     </div>
